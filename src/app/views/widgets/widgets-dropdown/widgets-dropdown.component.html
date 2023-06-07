@@ -1,0 +1,17 @@
+<c-row>
+  <c-col sm="6" xl="4" *ngFor="let articulo of articulos">
+    <c-widget-stat-a
+      class="mb-4"
+      color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}"
+    >
+      <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
+        <span>OF: {{articulo.OF}}</span> <br/>
+        <span class="un">ARTICULO: {{articulo.ARTICULO!}}</span> <br/>
+        <span class="un">UNID_EMBALADAS: {{articulo.UNID_EMBALADAS!}}</span>
+      </ng-template>
+      <ng-template cTemplateId="widgetChartTemplate">
+        <c-chart class="mt-2 mx-3" height="10" type="line"></c-chart>
+      </ng-template>     
+    </c-widget-stat-a>
+  </c-col>
+</c-row>
