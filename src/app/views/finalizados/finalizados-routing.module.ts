@@ -5,23 +5,10 @@ import { FinalizadosComponent } from './finalizados.component';
 const routes: Routes = [
   {
     path: '',
+    component: FinalizadosComponent,
     data: {
-      title: 'Finalizados'
-    },
-    children : [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'finalizados'
-      },
-      {
-        path: 'finalizados',
-        component: FinalizadosComponent,
-        data: {
-          title: 'Pedidos Finalizados'
-        }
-      }
-    ]
+      title: $localize`Dashboard`
+    }
   }
 ];
 

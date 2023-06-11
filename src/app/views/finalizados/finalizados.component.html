@@ -14,33 +14,15 @@
           <thead cTableColor="dark">
             <tr>
               <th><h5><strong>OF</strong></h5></th>
-              <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
               <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
-              <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
+              <th class="text-center"><h5><strong>UNID_EMBALADAS</strong></h5></th>
+              <th class="text-center"><h5><strong>UNID_SOLICITADAS</strong></h5></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let articulo of articulos; index as i">
               <td>
                 <div><h3>{{ articulo.OF }}</h3></div>
-              </td>
-              <td>
-                <div class="d-flex justify-content-between">
-                  <div class="float-start">
-                    <strong>{{articulo.UNID_EMBALADAS}} ({{calcularPercentaje(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}} %)</strong>
-                  </div>
-                  <div class="float-end ms-1 text-nowrap">
-                    <strong class="text-large-emphasis">
-                      {{ articulo.Cantidad }}
-                    </strong>
-                  </div>
-                </div>
-                <c-progress>
-                  <c-progress-bar
-                    [value]="calcularBadge(articulo.Cantidad!, articulo.UNID_EMBALADAS!)"
-                    color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}"
-                  ></c-progress-bar>
-                </c-progress>
               </td>
 
               <td>
@@ -50,7 +32,12 @@
               </td>
               <td>
                 <div class="text-center">
-                  <h5><strong>{{getStatus(articulo.Cantidad!,articulo.UNID_EMBALADAS!)}}</strong></h5>
+                  <h5><strong>{{articulo.UNID_EMBALADAS}}</strong></h5>
+                </div>
+              </td>
+              <td>
+                <div class="text-center">
+                  <h5><strong>{{articulo.Cantidad}}</strong></h5>
                 </div>
               </td>
 
@@ -58,11 +45,10 @@
           </tbody>
           <tfoot cTableColor="dark">
             <tr>
-              <!-- <th>PUESTO</th> -->
-              <th><h5><strong>PUESTO/OF</strong></h5></th>
-              <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
+              <th><h5><strong>OF</strong></h5></th>
               <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
-              <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
+              <th class="text-center"><h5><strong>UNID_EMBALADAS</strong></h5></th>
+              <th class="text-center"><h5><strong>UNID_SOLICITADAS</strong></h5></th>
             </tr>
           </tfoot>
         </table>

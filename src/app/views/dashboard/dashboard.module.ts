@@ -12,7 +12,8 @@ import {
   NavModule,
   ProgressModule,
   TableModule,
-  TabsModule
+  TabsModule,
+  SpinnerModule
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
@@ -32,6 +33,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
     CommonModule,
     GridModule,
     ProgressModule,
+    SpinnerModule,
     ReactiveFormsModule,
     ButtonModule,
     FormModule,

@@ -1,78 +1,86 @@
-<c-row>
-  <app-widgets-dropdown [articulos] = articulos></app-widgets-dropdown>
-</c-row>
 
-<c-row>
-  <c-col xs>
-    <c-card class="mb-4">
-      <c-card-header *ngIf="showStatus">En producción</c-card-header>
-      <c-card-header *ngIf="!showStatus">Esperando actualizacion</c-card-header>
-      <c-card-body *ngIf="showStatus">
-        <table
-          [hover]="true"
-          [responsive]="true"
-          [striped]="true"
-          align="middle"
-          cTable
-          class="mb-0 border"
-        >
-          <thead cTableColor="dark">
-            <tr>
-              <th><h5><strong>OF</strong></h5></th>
-              <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
-              <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
-              <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let articulo of articulos; index as i">
-              <td>
-                <div><h3>{{ articulo.OF }}</h3></div>
-              </td>
-              <td>
-                <div class="d-flex justify-content-between">
-                  <div class="float-start">
-                    <strong>{{articulo.UNID_EMBALADAS}} ({{calcularPercentaje(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}} %)</strong>
+<c-container>
+  <c-row  *ngIf="!showStatus" class="align-items-center" >
+    <c-col class="align-self-start">
+      <c-spinner color="info"></c-spinner>
+    </c-col>
+  </c-row>
+
+  <c-row *ngIf="showStatus">
+    <app-widgets-dropdown [articulos] = articulos></app-widgets-dropdown>
+  </c-row>
+  
+  <c-row *ngIf="showStatus">
+    <c-col xs>
+      <c-card class="mb-4" >
+        <c-card-header>En producción</c-card-header>
+        <c-card-body>
+          <table
+            [hover]="true"
+            [responsive]="true"
+            [striped]="true"
+            align="middle"
+            cTable
+            class="mb-0 border"
+          >
+            <thead cTableColor="dark">
+              <tr>
+                <th><h5><strong>OF</strong></h5></th>
+                <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
+                <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
+                <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let articulo of articulos; index as i">
+                <td>
+                  <div><h3>{{ articulo.OF }}</h3></div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <div class="float-start">
+                      <strong>{{articulo.UNID_EMBALADAS}} ({{calcularPercentaje(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}} %)</strong>
+                    </div>
+                    <div class="float-end ms-1 text-nowrap">
+                      <strong class="text-large-emphasis">
+                        {{ articulo.Cantidad }}
+                      </strong>
+                    </div>
                   </div>
-                  <div class="float-end ms-1 text-nowrap">
-                    <strong class="text-large-emphasis">
-                      {{ articulo.Cantidad }}
-                    </strong>
+                  <c-progress>
+                    <c-progress-bar
+                      [value]="calcularBadge(articulo.Cantidad!, articulo.UNID_EMBALADAS!)"
+                      color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}"
+                    ></c-progress-bar>
+                  </c-progress>
+                </td>
+  
+                <td>
+                  <div class="text-center">
+                    <h5><strong>{{ articulo.ARTICULO}}</strong></h5>
                   </div>
-                </div>
-                <c-progress>
-                  <c-progress-bar
-                    [value]="calcularBadge(articulo.Cantidad!, articulo.UNID_EMBALADAS!)"
-                    color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}"
-                  ></c-progress-bar>
-                </c-progress>
-              </td>
-
-              <td>
-                <div class="text-center">
-                  <h5><strong>{{ articulo.ARTICULO}}</strong></h5>
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  <h5><strong>{{getStatus(articulo.Cantidad!,articulo.UNID_EMBALADAS!)}}</strong></h5>
-                  <svg *ngIf="showChecked(articulo.Cantidad!,articulo.UNID_EMBALADAS!)" cIcon name="cil-check"></svg>
-                </div>
-              </td>
-
-            </tr>
-          </tbody>
-          <tfoot cTableColor="dark">
-            <tr>
-              <!-- <th>PUESTO</th> -->
-              <th><h5><strong>PUESTO/OF</strong></h5></th>
-              <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
-              <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
-              <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
-            </tr>
-          </tfoot>
-        </table>
-      </c-card-body>
-    </c-card>
-  </c-col>
-</c-row>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <h5><strong>{{getStatus(articulo.Cantidad!,articulo.UNID_EMBALADAS!)}}</strong></h5>
+                    <svg *ngIf="showChecked(articulo.Cantidad!,articulo.UNID_EMBALADAS!)" cIcon name="cil-check"></svg>
+                  </div>
+                </td>
+  
+              </tr>
+            </tbody>
+            <tfoot cTableColor="dark">
+              <tr>
+                <!-- <th>PUESTO</th> -->
+                <th><h5><strong>PUESTO/OF</strong></h5></th>
+                <th class="text-center"><h5><strong>PROGRESO FABRICACIÓN</strong></h5></th>
+                <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
+                <th class="text-center"><h5><strong>ESTADO</strong></h5></th>
+              </tr>
+            </tfoot>
+          </table>
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </c-row>
+</c-container>

@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PagesRoutingModule } from './pages-routing.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { Page404Component } from './page404/page404.component';
-import { Page500Component } from './page500/page500.component';
 import { IconModule } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
 
+//Components
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { Page404Component } from './page404/page404.component';
+import { Page500Component } from './page500/page500.component';
 
+import { AuthenticationRoutingModule } from './authentication-routing.module';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -20,8 +21,9 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
   ],
   imports: [
     CommonModule,
+    AuthenticationRoutingModule,
+    CommonModule,
     FormsModule,
-    PagesRoutingModule,
     CardModule,
     ButtonModule,
     GridModule,
@@ -29,5 +31,4 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
     FormModule,
   ]
 })
-export class PagesModule {
-}
+export class AuthenticationModule { }

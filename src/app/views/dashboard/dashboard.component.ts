@@ -11,7 +11,7 @@ import { DashboardService } from './../../Services/dashboard/dashboard.service'
 export class DashboardComponent implements OnInit {
   
   public percentaje: number = 0;
-  public showStatus: boolean = true;
+  public showStatus: boolean = false;
   public statusTitle: string = '';
 
   public articulos: Articulo [] = [];
@@ -24,7 +24,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this._service.getDashboard().pipe(
       map((res) => this.articulos = res.filter(element => element.UNID_EMBALADAS! <= element.Cantidad!)
-    )).subscribe(() => this.articulos.sort((a, b)=> b.UNID_EMBALADAS! - a.UNID_EMBALADAS!));
+    )).subscribe(() => {
+      if(this.articulos.length > 0) {
+        this.articulos.sort((a, b)=> b.UNID_EMBALADAS! - a.UNID_EMBALADAS!)
+        this.showStatus = true;
+      }
+    });
 
     this.getData();
   }

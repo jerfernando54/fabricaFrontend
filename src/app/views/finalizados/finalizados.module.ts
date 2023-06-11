@@ -8,6 +8,7 @@ import {
   GridModule,
   ProgressModule,
   TableModule,
+  SpinnerModule
 } from '@coreui/angular';
 
 
@@ -21,6 +22,7 @@ import {
     TableModule,
     CommonModule,
     ProgressModule,
+    SpinnerModule,
     FinalizadosRoutingModule
   ]
 })

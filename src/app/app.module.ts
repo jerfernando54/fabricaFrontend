@@ -17,6 +17,9 @@ import { AppComponent } from './app.component';
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 
+// Import fake backend provider
+import { fakeBackendProvider } from './_helpers/fake-backend';
+
 import {
   AvatarModule,
   BadgeModule,
@@ -83,7 +86,8 @@ const APP_CONTAINERS = [
       useClass: HashLocationStrategy
     },
     IconSetService,
-    Title
+    Title,
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
