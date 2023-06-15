@@ -1,12 +1,55 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../models/user.model';
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development'
+
+import { Auth } from 'src/app/models/user.model';
+import { authData } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private readonly baseUrl = environment.baseURL;
 
-  constructor(private http: HttpClient) { }
+  public user!: Observable<Auth | null>;
+  private userSubject!: BehaviorSubject<Auth | null>;
+  
+
+  constructor(
+    private router: Router,
+    private _http: HttpClient
+  ){
+    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+    this.user = this.userSubject.asObservable();
+  }
+
+   public get userValue() {
+    return this.userSubject.value;
+  }
+
+  login(authData:authData ): Observable<Auth>{
+    return this._http.post<Auth>(`${this.baseUrl}auth/login`, authData).pipe(
+      map(res => {
+        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('token', JSON.stringify(res.token))
+        this.userSubject.next(res);
+        return res
+      })
+    )
+  }
+
+  getToken(): string{
+    const token = localStorage.getItem('token')!;
+    return token;
+  }
+
+  logout(): void{
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.userSubject.next(null);
+    this.router.navigate(['login']);
+  }
 }

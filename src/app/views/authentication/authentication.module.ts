@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { IconModule } from '@coreui/icons-angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
 
 //Components
@@ -21,7 +21,6 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
   ],
   imports: [
     CommonModule,
-    AuthenticationRoutingModule,
     CommonModule,
     FormsModule,
     CardModule,
@@ -29,6 +28,8 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
     GridModule,
     IconModule,
     FormModule,
+    ReactiveFormsModule,
+    AuthenticationRoutingModule,
   ]
 })
 export class AuthenticationModule { }

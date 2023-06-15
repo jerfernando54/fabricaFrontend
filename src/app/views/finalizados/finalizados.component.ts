@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs';
 
 import { Articulo } from 'src/app/models/articulo.model';
-import { DashboardService } from './../../Services/dashboard/dashboard.service'
+import { DashboardService } from 'src/app/Services/dashboard/dashboard.service'
 
 @Component({
   selector: 'app-finalizados',
