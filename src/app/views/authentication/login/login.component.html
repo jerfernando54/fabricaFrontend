@@ -18,13 +18,12 @@
                     formControlName = "username"
                     cFormControl
                     placeholder="Usuario"
-                   
                     name = "username"
                     (ngModelChange)="changeInput()"
                   />
-                  <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-                    <div *ngIf="f['username'].errors['required']">Username is required</div>
-                </div>
+                  <c-row *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                    <c-row *ngIf="f['username'].errors['required']">Username is required</c-row>
+                  </c-row>
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
@@ -35,18 +34,14 @@
                     cFormControl
                     formControlName = "password"
                     placeholder="Contraseña"
-                    
                     name = "password"
                     type="password"
                     (ngModelChange)="changeInput()"
                   />
-                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-                    <div *ngIf="f['password'].errors['required']">Password is required</div>
-                </div>
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
-                    <button type="submit" cButton class="px-4" color="primary" [disabled]="loading" >
+                    <button type="submit" cButton class="px-4" color="primary" [disabled]="isButtonLoginDisabled || loading" >
                       <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                       Login
                     </button>

@@ -11,7 +11,7 @@ import { authData } from 'src/app/models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AuthService {
   private readonly baseUrl = environment.baseURL;
 
   public user!: Observable<Auth | null>;
@@ -33,7 +33,6 @@ export class UserService {
   login(authData:authData ): Observable<Auth>{
     return this._http.post<Auth>(`${this.baseUrl}auth/login`, authData).pipe(
       map(res => {
-        localStorage.setItem('user', JSON.stringify(res.user));
         localStorage.setItem('token', JSON.stringify(res.token))
         this.userSubject.next(res);
         return res
@@ -44,6 +43,10 @@ export class UserService {
   getToken(): string{
     const token = localStorage.getItem('token')!;
     return token;
+  }
+
+  getUserRol(): boolean {
+    return this.userValue?.user?.role === 'admin' ? true : false;
   }
 
   logout(): void{

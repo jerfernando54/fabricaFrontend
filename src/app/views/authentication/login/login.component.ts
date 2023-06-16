@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute  } from "@angular/router";
 import { first, Observable, of } from 'rxjs';
-import {FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { User } from 'src/app/models/user.model';
 import { authData } from 'src/app/models/user.model';
-import { UserService }from 'src/app/Services/user/user.service'
+import { AuthService }from 'src/app/Services/auth/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   
   public userAuth: authData = {}
   isButtonLoginDisabled = true;
-  username = ''
 
   form!: FormGroup;
   error?: string;
@@ -27,20 +26,15 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private actRoute: ActivatedRoute,
     private router: Router,
-    private userSVC: UserService
+    private authService: AuthService
   ) { 
-      if (this.userSVC.userValue) {
+      if (this.authService.userValue) {
       this.router.navigate(['dashboard']);
       }
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-
-    console.log(this.form.value)
+    this.createForm()
   }
 
   get f() {return this.form.controls;}
@@ -58,39 +52,30 @@ export class LoginComponent implements OnInit {
       username: this.f['username'].value, password: this.f['password'].value
     }
 
-    this.userSVC.login(userData).pipe(first())
+    this.authService.login(userData).pipe(first())
       .subscribe({next: () => {
-        const returnUrl = this.actRoute.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigateByUrl('dasboard');
+        const returnUrl = this.actRoute.snapshot.queryParams['returnUrl'] || 'dasboard';
+        this.router.navigateByUrl(returnUrl);
       },
       error: error => {
-        this.error = error;
+        this.error = error.error.Message || 'Could not establish connection to server';
         this.loading = false;
       }
     })
-
-    // this.validatForm() ?
-    //   this.userSVC.login(this.form.value).pipe(first()).subscribe(()=>{
-    //     this.router.navigateByUrl('dasboard');
-    //     this.resetForm();
-    //   }) : false;
   }
 
   changeInput(): void{
-    if (!this.userAuth.username! || this.userAuth.username!.trim() === '' && !this.userAuth.password! || this.userAuth.password!.trim() === '') {
+    if (this.form.invalid) {
       this.isButtonLoginDisabled = true;
     } else {
       this.isButtonLoginDisabled = false;
     }
   }
 
-  resetForm(): void{
-    this.userAuth.username = '';
-    this.userAuth.password = '';
-    this.isButtonLoginDisabled = true;
-  }
-
-  validatForm(): boolean {
-    return this.userAuth.username !== undefined || !this.userAuth.password !== undefined ? true: false;
+  createForm(): void {
+    this.form = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 }

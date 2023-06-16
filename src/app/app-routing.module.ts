@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DefaultLayoutComponent } from './containers';
 import { LoginComponent } from './views/authentication/login/login.component';
+import { Page404Component } from './views/authentication/page404/page404.component';
 import { RegisterComponent } from './views/authentication/register/register.component';
 
-//Guard
-import { authGuardFn } from './guards/auth-fn-guard';
+import { authGuard, isAdminGuard } from 'src/app/guards/auth.guard'
 
 const routes: Routes = [
   {
@@ -20,15 +20,17 @@ const routes: Routes = [
     data: {
       title: 'Home'
     },
-    canActivate: [authGuardFn],
+    
     children: [
       {
+        canActivate: [authGuard],
         path: 'dashboard',
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       
       {
+        canActivate: [authGuard],
         path: 'finalizados',
         loadChildren: () =>
           import('./views/finalizados/finalizados.module').then((m) => m.FinalizadosModule)
@@ -48,13 +50,22 @@ const routes: Routes = [
     }
   },
   {
+    path: '404',
+    component: Page404Component,
+    data: {
+      title: 'Page not found'
+    }
+  },
+
+  {
+    canActivate: [authGuard, isAdminGuard],
     path: 'register',
     component: RegisterComponent,
     data: {
       title: 'Register Page'
     }
   },
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({
