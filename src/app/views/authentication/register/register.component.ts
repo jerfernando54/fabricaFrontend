@@ -47,7 +47,6 @@ export class RegisterComponent {
           this.loading = false;
           this.success = res.Message
           this.isButtonLoginDisabled = true;
-          this.userSvc.getUsers().subscribe()
           setTimeout(() => {
             this.router.navigateByUrl('user/users');
           }, 1500)

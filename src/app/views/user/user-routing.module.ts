@@ -8,7 +8,7 @@ const routes: Routes = [
     path:"users",
     component: UsersComponent,
     data: {
-      title: $localize`Todos usuarios`,
+      title: $localize`Todos los usuarios`,
       allowedRoles:['admin']
     }
   },

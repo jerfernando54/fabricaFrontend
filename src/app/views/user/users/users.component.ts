@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { first, Subscription } from 'rxjs';
+import { BehaviorSubject, first, Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/Services/user/user.service';
@@ -48,20 +48,30 @@ export class UsersComponent implements OnInit, OnDestroy {
     private router: Router,) {}
 
   ngOnInit(): void {
+    this.getUsers();
+    this._userSubscription = this.userSVC.refresh$.subscribe(() => {
+      this.getUsers();
+    })
 
-    this.users = JSON.parse(localStorage.getItem('users')!)
-    if(this.users === null){
-      this._userSubscription = this.userSVC.getUsers().subscribe(
-        () => {
-          this.users = JSON.parse(localStorage.getItem('users')!);
-        }
-      )
-    }
+    // this.users = JSON.parse(localStorage.getItem('users')!)
+    // if(this.users === null){
+    //   this._userSubscription = this.userSVC.getUsers().subscribe(
+    //     () => {
+    //       this.users = JSON.parse(localStorage.getItem('users')!);
+    //     }
+    //   )
+    // }
 
     this.currentUserId = JSON.parse(localStorage.getItem('user')!).id
 
     this.createForm();
   };
+
+  getUsers() {
+    this.userSVC.getUsers().subscribe((res) => {
+      this.users = JSON.parse(localStorage.getItem('users')!);
+    })
+  }
 
   getDate(date: any): string{
     let fecha = new Date(date);
@@ -104,7 +114,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {          
           this.toastContent = res.Message;
-          this.userSVC.getUsers().subscribe();
           this.showToastBorrarUsuario = false;
           this.showToast = true ;
           this.bgColor = 'success';
@@ -131,12 +140,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   confirmarUser(user: User) {
     this.user = user
 
-    this.formValid();
-    this.userId = user.userId!
+    this.form.patchValue({userId: user.userId!})
     this.name = user.name!
     this.username = user.username!
     this.email = user.email!
     this.role = user.role! == 'admin'? 'Administrador': 'Fabrica'
+
+    this.formValid();
   };
 
   closeToast() {
