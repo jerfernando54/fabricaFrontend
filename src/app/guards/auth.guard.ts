@@ -1,34 +1,40 @@
 import { 
   Router,
   CanActivateFn, 
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  CanMatchFn,
+  Route,
+  UrlSegment
 } from '@angular/router';
 
 import { AuthService} from "../Services/auth/auth.service"
 import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  
   const authService = inject(AuthService);
   const router = inject(Router);
 
   const user = authService.userValue;
-  if(user?.user) {
+
+  if(user) {
     return true
   }
-  return false;
+  return router.createUrlTree(['/login']);
 };
 
-export const isAdminGuard: CanActivateFn = (route, state) => {
+export const adminGuard: CanActivateFn = (route, state) => {
+  const allowedRoles = route.data?.['allowedRoles'] || []
   const authService = inject(AuthService);
-  const router = inject(Router);
 
-  const isAdmin = authService.getUserRol()
-
-  if(isAdmin){
-    return true;
+  if(allowedRoles){
+    const userRole = authService.getUserRol()
+    return allowedRoles.includes(userRole) ? true : false
   }
-  
-  router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
-  return false;
+  return true
 }
+
+
+
+
+
+

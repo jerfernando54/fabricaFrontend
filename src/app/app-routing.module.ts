@@ -6,7 +6,7 @@ import { LoginComponent } from './views/authentication/login/login.component';
 import { Page404Component } from './views/authentication/page404/page404.component';
 import { RegisterComponent } from './views/authentication/register/register.component';
 
-import { authGuard, isAdminGuard } from 'src/app/guards/auth.guard'
+import { authGuard, adminGuard } from 'src/app/guards/auth.guard'
 
 const routes: Routes = [
   {
@@ -23,25 +23,44 @@ const routes: Routes = [
     
     children: [
       {
-        canActivate: [authGuard],
         path: 'dashboard',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       
       {
-        canActivate: [authGuard],
         path: 'finalizados',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./views/finalizados/finalizados.module').then((m) => m.FinalizadosModule)
       },
+  
+      {
+        path: 'user',
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./views/user/user.module').then((m) => m.UserModule)
+      },
+  
       {
         path: 'authentication',
         loadChildren: () => 
           import('./views/authentication/authentication.module').then((m) => m.AuthenticationModule)
+      },
+
+      {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [authGuard, adminGuard],
+        data: {
+          title: 'Nuevo Usuario',
+          allowedRoles: ['admin']
+        }
       }
     ]
   },
+
   {
     path: 'login',
     component: LoginComponent,
@@ -49,23 +68,18 @@ const routes: Routes = [
       title: 'Login Page'
     }
   },
+
   {
     path: '404',
+    canActivate: [authGuard],
     component: Page404Component,
     data: {
       title: 'Page not found'
     }
   },
 
-  {
-    canActivate: [authGuard, isAdminGuard],
-    path: 'register',
-    component: RegisterComponent,
-    data: {
-      title: 'Register Page'
-    }
-  },
-  {path: '**', redirectTo: '404'}
+  {path: '**', redirectTo: 'dashboard'}
+  
 ];
 
 @NgModule({

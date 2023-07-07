@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs';
-
 import { Articulo } from 'src/app/models/articulo.model';
 import { DashboardService } from 'src/app/Services/dashboard/dashboard.service'
 
@@ -23,15 +22,15 @@ export class FinalizadosComponent {
   }
 
   ngOnInit(): void {
-    this._service.getDashboard().pipe(
-      map((res) => this.articulos = res.filter(element => element.UNID_EMBALADAS! >= element.Cantidad!)
-    )).subscribe();
+    this._service.getDashboardData().pipe(
+      map((res) => this.articulos = res)
+    ).subscribe();
 
     this.getData();
   }
   getData() {
     setInterval(() => {
-      this._service.getDashboard().pipe(
+      this._service.getDashboardData().pipe(
         map((res) => this.articulos = res.filter(element => element.UNID_EMBALADAS! >= element.Cantidad!)
       )).subscribe();
     }, 200000)

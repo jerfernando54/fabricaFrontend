@@ -3,7 +3,6 @@ import { Router, ActivatedRoute  } from "@angular/router";
 import { first, Observable, of } from 'rxjs';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { User } from 'src/app/models/user.model';
 import { authData } from 'src/app/models/user.model';
 import { AuthService }from 'src/app/Services/auth/auth.service'
 
@@ -29,7 +28,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) { 
       if (this.authService.userValue) {
-      this.router.navigate(['dashboard']);
+        this.router.navigate(['/dashboard']);
       }
   }
 
@@ -54,11 +53,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(userData).pipe(first())
       .subscribe({next: () => {
-        const returnUrl = this.actRoute.snapshot.queryParams['returnUrl'] || 'dasboard';
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigateByUrl('dasboard');
       },
       error: error => {
-        this.error = error.error.Message || 'Could not establish connection to server';
+        this.error = error || 'Could not establish connection to server';
         this.loading = false;
       }
     })

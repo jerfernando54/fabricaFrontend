@@ -1,16 +1,16 @@
 
 <c-container>
-  <c-row  *ngIf="!showStatus" class="align-items-center" >
+  <c-row  *ngIf="!articles" class="align-items-center" >
     <c-col class="align-self-start">
       <c-spinner color="info"></c-spinner>
     </c-col>
   </c-row>
 
-  <c-row *ngIf="showStatus">
-    <app-widgets-dropdown [articulos] = articulos></app-widgets-dropdown>
+  <c-row *ngIf="articles">
+    <app-widgets-dropdown [articulos] = articles></app-widgets-dropdown>
   </c-row>
   
-  <c-row *ngIf="showStatus">
+  <c-row *ngIf="articles">
     <c-col xs>
       <c-card class="mb-4" >
         <c-card-header>En producción</c-card-header>
@@ -32,7 +32,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let articulo of articulos; index as i">
+              <tr *ngFor="let articulo of articles">
                 <td>
                   <div><h3>{{ articulo.OF }}</h3></div>
                 </td>
@@ -57,13 +57,12 @@
   
                 <td>
                   <div class="text-center">
-                    <h5><strong>{{ articulo.ARTICULO}}</strong></h5>
+                    <h5><strong>{{ articulo.Descripcion}}</strong></h5>
                   </div>
                 </td>
                 <td>
                   <div class="text-center">
                     <h5><strong>{{getStatus(articulo.Cantidad!,articulo.UNID_EMBALADAS!)}}</strong></h5>
-                    <svg *ngIf="showChecked(articulo.Cantidad!,articulo.UNID_EMBALADAS!)" cIcon name="cil-check"></svg>
                   </div>
                 </td>
   

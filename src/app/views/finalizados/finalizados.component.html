@@ -17,17 +17,18 @@
               <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
               <th class="text-center"><h5><strong>UNID_EMBALADAS</strong></h5></th>
               <th class="text-center"><h5><strong>UNID_SOLICITADAS</strong></h5></th>
+              <th class="text-center"><h5><strong>FECHA</strong></h5></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let articulo of articulos; index as i">
+            <tr *ngFor="let articulo of articulos | filterFinalizeds">
               <td>
                 <div><h3>{{ articulo.OF }}</h3></div>
               </td>
 
               <td>
                 <div class="text-center">
-                  <h5><strong>{{ articulo.ARTICULO}}</strong></h5>
+                  <h5><strong>{{ articulo.Descripcion}}</strong></h5>
                 </div>
               </td>
               <td>
@@ -40,6 +41,11 @@
                   <h5><strong>{{articulo.Cantidad}}</strong></h5>
                 </div>
               </td>
+              <td>
+                <div class="text-center">
+                  <h5><strong>{{articulo}}</strong></h5>
+                </div>
+              </td>
 
             </tr>
           </tbody>
@@ -49,6 +55,7 @@
               <th class="text-center"><h5><strong>ARTICULO</strong></h5></th>
               <th class="text-center"><h5><strong>UNID_EMBALADAS</strong></h5></th>
               <th class="text-center"><h5><strong>UNID_SOLICITADAS</strong></h5></th>
+              <th class="text-center"><h5><strong>FECHA</strong></h5></th>
             </tr>
           </tfoot>
         </table>

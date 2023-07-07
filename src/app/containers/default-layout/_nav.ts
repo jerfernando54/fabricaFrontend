@@ -2,13 +2,15 @@ import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
   {
+    name: 'Menu',
     title: true,
-    name: 'Menu'
+    attributes: {allowedRoles: ['admin', 'fabrica']},
   },
   {
     name: 'En Producción',
     url: '/dashboard',
     iconComponent: { name: 'cil-speedometer' },
+    attributes: {allowedRoles: ['admin', 'fabrica']},
     badge: {
       color: 'info',
       text: 'Ahora'
@@ -17,24 +19,26 @@ export const navItems: INavData[] = [
   {
     name: 'Finalizados',
     url: '/finalizados',
-    iconComponent: { name: 'cil-puzzle' }
+    iconComponent: { name: 'cil-puzzle' },
+    attributes: {allowedRoles: ['admin', 'fabrica']},
   },
   {
     name: 'Usuario',
-    title: true
+    title: true,
+    attributes: {allowedRoles: ['admin']},
   },
   {
-    name: 'Authentication',
-    url: '/login',
+    name: 'Users',
     iconComponent: { name: 'cil-user' },
+    attributes: {allowedRoles: ['admin']},
     children: [
       {
-        name: 'Login',
-        url: '/login'
+        name: 'Todos usuarios',
+        url: '/user/users',
       },
       {
-        name: 'Register',
-        url: '/register'
+        name: 'Nuevo usuario',
+        url: '/register',
       },
     ]
   },

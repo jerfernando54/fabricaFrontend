@@ -1,36 +1,64 @@
-<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+<div class="bg-light d-flex flex-row align-items-center">
   <c-container>
     <c-row class="justify-content-center">
       <c-col lg="7" md="9" xl="6">
+        <c-col *ngIf="error" class="alert alert-danger">{{error}}</c-col>
+        <c-col *ngIf="success" class="alert alert-success">{{success}}</c-col>
         <c-card class="mx-4">
           <c-card-body class="p-4">
-            <form cForm>
-              <h1>Register</h1>
-              <p class="text-medium-emphasis">Create your account</p>
+            <form cForm [formGroup]="form" (ngSubmit)="createUser()">
+              <h1>Rgistro</h1>
+              <p class="text-medium-emphasis">Registrar nuevo usuario</p>
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input 
+                  autoComplete="Nombre y apellidos"
+                  cFormControl
+                  placeholder="Nombre y apellidos"
+                  type="text"
+                  formControlName = "name"
+                  (ngModelChange)="formValid()"/>
+              </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
-                <input autoComplete="name" cFormControl placeholder="Username" />
+                <input 
+                  autoComplete="name"
+                  cFormControl
+                  formControlName = "username"
+                  (ngModelChange)="formValid()"
+                  placeholder="Username"
+                  />
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>@</span>
-                <input autoComplete="email" cFormControl placeholder="Email" />
+                <input 
+                  autoComplete="email"
+                  cFormControl
+                  placeholder="Email"
+                  formControlName = "email"
+                  (ngModelChange)="formValid()"/>
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
-                <input autoComplete="new-password" cFormControl placeholder="Password" type="password" />
-              </c-input-group>
-              <c-input-group class="mb-4">
-                <span cInputGroupText>
-                  <svg cIcon name="cilLockLocked"></svg>
-                </span>
-                <input autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
+                <input 
+                  autoComplete="new-password"
+                  cFormControl
+                  placeholder="Password"
+                  type="password"
+                  formControlName = "password"
+                  (ngModelChange)="formValid()"/>
               </c-input-group>
               <div class="d-grid">
-                <button cButton color="success">Create Account</button>
+                <button type="submit" cButton class="px-4" color="primary" [disabled]="isButtonLoginDisabled || loading" >
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                  Registrar
+                </button>
               </div>
             </form>
           </c-card-body>

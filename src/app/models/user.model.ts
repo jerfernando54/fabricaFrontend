@@ -1,10 +1,10 @@
 export interface User {
-  id?: string;
+  userId?: string;
   name?: string;
   email?: string;
   username?: string;
   role?: string;
-  fecha_de_alta?: string;
+  createdAt?: string;
 }
 
 export interface Auth {
@@ -16,6 +16,11 @@ export interface Auth {
 export interface authData {
   username?: string,
   password?: string
+}
+
+export interface actionUserResponse {
+  Status?: number;
+  Message?: string
 }
 
 const authData: Partial <authData> = {};

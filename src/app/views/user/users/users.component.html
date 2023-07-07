@@ -1,0 +1,203 @@
+<div class="position">
+  <c-toaster placement="top-end" position="absolute">
+    <c-toast [autohide]="false" visible="{{showToast}}">
+      <c-toast-header cBgColor="{{bgColor}}">
+        <toast-sample-icon></toast-sample-icon>
+        <strong class="me-auto text-info">{{toastTitle}}</strong>
+      </c-toast-header>
+      <c-toast-body>{{toastContent}}</c-toast-body>
+    </c-toast>
+  </c-toaster>
+</div>
+
+<!-- Modal confirmar borrar usuario -->
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+  <c-modal-header cBgColor="info">
+    <h5 cModalTitle class="text-info">Confirmar borrar usuario</h5>
+    <button [cModalToggle]="staticBackdropModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    Esta acción es irreversible. ¿Estás seguro que quieres borrar este usuario de tu sistema?
+  </c-modal-body>
+  <c-modal-footer class="justify-content-md-start">
+    <button cButton color="danger" (click)="deleteUser()" [cModalToggle]="staticBackdropModal.id">
+      <span class="text-info"><strong>Borrar</strong></span>
+    </button>
+    <button class="m-2" [cModalToggle]="staticBackdropModal.id" cButton color="secondary">
+      <span class="text-info"><strong>Cancelar</strong></span>
+    </button>
+  </c-modal-footer>
+</c-modal>
+
+<!-- Modla editar usuario -->
+<c-modal #editUserModal backdrop="static" id="editUserModal">
+  <c-modal-header cBgColor="dark">
+    <h5 cModalTitle class="text-info">Editar Usuario</h5>
+    <button [cModalToggle]="editUserModal.id" cButtonClose></button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="12"> 
+        <c-card>
+          <c-card-body class="p-4">
+            <form cForm [formGroup]="form">
+              <c-input-group class="mb-4">
+                <!-- <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span> -->
+                <label cInputGroupText>
+                  Nombre
+                </label>
+                <input 
+                  type="text"
+                  cFormControl
+                  [(ngModel)] = "name"
+                  formControlName = "name"
+                  (ngModelChange)="formValid()"/>
+                </c-input-group>
+              <c-input-group class="mb-3">
+                <label cInputGroupText>
+                  Usuario
+                </label>
+                <input 
+                  autoComplete="username"
+                  cFormControl
+                  [(ngModel)] = "username"
+                  readonly
+                  formControlName = "username"
+                  />
+              </c-input-group>
+              <c-input-group class="mb-3">
+                <label cInputGroupText>
+                  Email
+                </label>
+                <input 
+                  autoComplete="email"
+                  readonly
+                  [(ngModel)] = "email"
+                  cFormControl
+                  formControlName = "email"/>
+              </c-input-group>
+              <c-input-group class="mb-3" ng>
+                <label cInputGroupText for="roles">
+                  Rol
+                </label>
+                <select
+                  id="roles" 
+                  cSelect cFormControl  
+                  [(ngModel)] = "role" 
+                  formControlName = "role"
+                  [disabled]="true"
+                  (ngModelChange)="formValid()">
+                  <option [value]="item" *ngFor="let item of roles">{{item}}</option>
+                </select>
+              </c-input-group>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-modal-body>
+
+  <c-modal-footer class="justify-content-md-start">
+    <button cButton
+      color="success"
+      (click)="editUser()"
+      [cModalToggle]="editUserModal.id"
+      [disabled]="isButtonLoginDisabled"
+      >
+      <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+      <span class="text-info"><strong>Guardar cambios</strong></span>
+    </button>
+    <button class="m-2" [cModalToggle]="editUserModal.id" cButton color="secondary">
+      <span class="text-info"><strong>Cancelar</strong></span>
+    </button>
+  </c-modal-footer>
+</c-modal>
+
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-header >
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button cButton color="dark" class="me-md-2 d-grid gap-2 d-md-flex justify-content-md-end"  cTooltip="Añadir nuevo usuario" cTooltipPlacement="top">
+          
+            <a cNavLink routerLink="/register" cTooltip="Añadir nuevo usuario" cTooltipPlacement="top">
+              <svg [cIcon]="icons.cilUserPlus" cTextColor="white" width="22" title="Shield Icon" ></svg>
+            </a>
+          </button>
+        </div>
+      </c-card-header>
+      <c-card-body>
+        <table
+          [hover]="true"
+          [responsive]="true"
+          [striped]="true"
+          align="middle"
+          cTable
+          class="mb-0 border"
+        >
+          <thead cTableColor="light">
+            <tr>
+              <th>Nombre y Apellidos</th>
+              <th >Usuario</th>
+              <th>Rol</th>
+              <th>Email</th>
+              <th>Fecha de alta</th>
+              <th class="text-center">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; index as i">
+              <td>
+                <div>{{ user.name }}</div>
+              </td>
+              <td>
+                <div>{{ user.username }}</div>
+              </td>
+              <td>
+                <div>
+                  {{ user.role }}
+                </div>
+              </td>
+              <td >
+                {{ user.email }}
+              </td>
+              <td>
+                <div class="small text-medium-emphasis">{{getDate(user.createdAt)}}</div>
+              </td>
+              <td>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                  <button 
+                  class="me-md-2"
+                    cButton color="dark"
+                    cTooltipPlacement="top"
+                    (click)="confirmarUser(user)"
+                    [cModalToggle]="editUserModal.id"
+                    cTooltip="Ver o editar datos del usuario">
+                    
+                    <svg [cIcon]="icons.cilPen" cTextColor="white"></svg>
+                  </button>
+                  <button 
+                    cButton 
+                    color="danger" 
+                    class="me-md-2" 
+                    disabled="{{user.userId! == currentUserId}}"
+                    cTooltipPlacement="top"
+                    cTooltip="Borrar usuario" 
+                    (click)="confirmarUser(user)"
+                    [cModalToggle]="staticBackdropModal.id">
+                    <svg [cIcon]="icons.cilTrash" cTextColor="white"> </svg>
+
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+

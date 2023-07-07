@@ -12,6 +12,8 @@ import { Page404Component } from './page404/page404.component';
 import { Page500Component } from './page500/page500.component';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
+
+import { AngularCoreuiModule } from 'src/app/Modules/angular-coreui/angular-coreui.module';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -29,6 +31,7 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
     IconModule,
     FormModule,
     ReactiveFormsModule,
+    AngularCoreuiModule,
     AuthenticationRoutingModule,
   ]
 })
