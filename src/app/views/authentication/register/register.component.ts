@@ -21,7 +21,7 @@ export class RegisterComponent {
   isButtonLoginDisabled = true;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private userSvc: UserService
   ) {}
@@ -73,11 +73,11 @@ export class RegisterComponent {
   }
 
   createForm(): void {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      username: ['',Validators.required],
-      email: ['', Validators.required],
-      password:['', Validators.required],
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['',[Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password:['', [Validators.required, Validators.minLength(5)]]
     })
   }
 }

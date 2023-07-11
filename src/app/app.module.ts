@@ -28,7 +28,6 @@ import { ShowForRolesDirective } from './directive/auth/show-for-roles.directive
 
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { ToastSampleComponent } from './views/toast-sample/toast-sample.component';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -40,7 +39,7 @@ const APP_CONTAINERS = [
   declarations: [
     AppComponent, 
     ...APP_CONTAINERS, 
-    ShowForRolesDirective, ToastSampleComponent,
+    ShowForRolesDirective
   ],
 
   imports: [
@@ -69,8 +68,7 @@ const APP_CONTAINERS = [
   ],
   bootstrap: [AppComponent],
   exports: [
-    ShowForRolesDirective,
-    ToastSampleComponent
+    ShowForRolesDirective
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

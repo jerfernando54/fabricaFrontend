@@ -55,7 +55,4 @@ export class FinalizadosComponent {
     return unidades >= total ? 'Finalizado' : 'En Producción';
   }
   
-  showChecked(total: number, unidades: number): boolean {
-    return unidades >= total ? true : false;
-  }
 }

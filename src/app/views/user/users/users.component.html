@@ -43,52 +43,33 @@
           <c-card-body class="p-4">
             <form cForm [formGroup]="form">
               <c-input-group class="mb-4">
-                <!-- <span cInputGroupText>
-                  <svg cIcon name="cilUser"></svg>
-                </span> -->
-                <label cInputGroupText>
-                  Nombre
-                </label>
+                <label cInputGroupText>Nombre</label>
                 <input 
                   type="text"
                   cFormControl
-                  [(ngModel)] = "name"
                   formControlName = "name"
                   (ngModelChange)="formValid()"/>
                 </c-input-group>
               <c-input-group class="mb-3">
-                <label cInputGroupText>
-                  Usuario
-                </label>
+                <label cInputGroupText> Usuario</label>
                 <input 
-                  autoComplete="username"
                   cFormControl
-                  [(ngModel)] = "username"
-                  readonly
                   formControlName = "username"
                   />
               </c-input-group>
               <c-input-group class="mb-3">
-                <label cInputGroupText>
-                  Email
-                </label>
+                <label cInputGroupText>Email</label>
                 <input 
-                  autoComplete="email"
-                  readonly
-                  [(ngModel)] = "email"
                   cFormControl
                   formControlName = "email"/>
               </c-input-group>
               <c-input-group class="mb-3" ng>
-                <label cInputGroupText for="roles">
-                  Rol
-                </label>
+                <label cInputGroupText for="roles">Rol</label>
                 <select
                   id="roles" 
-                  cSelect cFormControl  
-                  [(ngModel)] = "role" 
+                  cSelect
+                  cFormControl
                   formControlName = "role"
-                  [disabled]="true"
                   (ngModelChange)="formValid()">
                   <option [value]="item" *ngFor="let item of roles">{{item}}</option>
                 </select>

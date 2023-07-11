@@ -48,8 +48,7 @@ export class UserService {
 
   //copia
   updateUser(user: User): Observable<actionUserResponse> {
-    const userRole = user.role
-    if(userRole == 'Administrador') {user.role = 'admin'}
+    if(user.role === 'Administrador') {user.role = 'admin'}
     else { user.role = 'fabrica'}
     
     return this._http.put<actionUserResponse>(`${this.baseUrl}user`, user).pipe(
@@ -77,7 +76,7 @@ export class UserService {
   //   )
   // }
 
-  deleteUser(userId:string): Observable<actionUserResponse> {
+  deleteUser(userId: string): Observable<actionUserResponse> {
     return this._http.delete<actionUserResponse>(`${this.baseUrl}user/${userId}`).pipe(
       tap(() => {
         this._refresh$.next();

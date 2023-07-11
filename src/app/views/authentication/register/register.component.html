@@ -7,53 +7,64 @@
         <c-card class="mx-4">
           <c-card-body class="p-4">
             <form cForm [formGroup]="form" (ngSubmit)="createUser()">
-              <h1>Rgistro</h1>
+              <h1>Registro</h1>
               <p class="text-medium-emphasis">Registrar nuevo usuario</p>
               <c-input-group class="mb-4">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
                 <input 
-                  autoComplete="Nombre y apellidos"
-                  cFormControl
-                  placeholder="Nombre y apellidos"
                   type="text"
+                  cFormControl
                   formControlName = "name"
-                  (ngModelChange)="formValid()"/>
+                  (ngModelChange)="formValid()"
+                  placeholder="Nombre y apellidos"
+                  autoComplete="Nombre y apellidos"
+                  [ngClass]="{input_error: form.controls['name'].errors 
+                    && form.controls['name'].value}"/>
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
                 <input 
-                  autoComplete="name"
                   cFormControl
+                  autoComplete="name"
+                  placeholder="Username"
                   formControlName = "username"
                   (ngModelChange)="formValid()"
-                  placeholder="Username"
+                  [ngClass]="{input_error: form.controls['username'].errors
+                    && form.controls['username'].value}"
                   />
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>@</span>
                 <input 
-                  autoComplete="email"
                   cFormControl
                   placeholder="Email"
+                  autoComplete="email"
                   formControlName = "email"
-                  (ngModelChange)="formValid()"/>
+                  (ngModelChange)="formValid()"
+                  [ngClass]="{input_error: form.controls['email'].errors
+                    && form.controls['email'].value}"/>
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
                 <input 
-                  autoComplete="new-password"
                   cFormControl
-                  placeholder="Password"
                   type="password"
+                  placeholder="Password"
+                  autoComplete="new-password"
                   formControlName = "password"
-                  (ngModelChange)="formValid()"/>
+                  (ngModelChange)="formValid()"
+                  [ngClass]="{input_error: form.controls['password'].errors
+                    && form.controls['password'].value}"/>
               </c-input-group>
+              <p class="alert-error" *ngIf="form.controls['password'].errors?.['minlength']">
+                La contraseña debe tener almenos 5 caracteres
+              </p>
               <div class="d-grid">
                 <button type="submit" cButton class="px-4" color="primary" [disabled]="isButtonLoginDisabled || loading" >
                   <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
