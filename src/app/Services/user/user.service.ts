@@ -1,11 +1,11 @@
+import { tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject, first, map} from 'rxjs';
-import { tap} from 'rxjs/operators';
 import { environment } from 'src/environments/environment'
 
-import { actionUserResponse } from 'src/app/models/user.model'
 import { User } from 'src/app/models/user.model';
+import { actionUserResponse } from 'src/app/models/user.model'
 
 @Injectable({
   providedIn: 'root'

@@ -13,54 +13,57 @@
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
-                <input 
+                <input
+                  required 
                   type="text"
                   cFormControl
                   formControlName = "name"
                   (ngModelChange)="formValid()"
                   placeholder="Nombre y apellidos"
                   autoComplete="Nombre y apellidos"
-                  [ngClass]="{input_error: form.controls['name'].errors 
-                    && form.controls['name'].value}"/>
+                  [ngClass]="{input_error: form.controls['name'].errors?.['minlength']}"/>
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
-                <input 
+                <input
+                  required
                   cFormControl
                   autoComplete="name"
                   placeholder="Username"
                   formControlName = "username"
                   (ngModelChange)="formValid()"
-                  [ngClass]="{input_error: form.controls['username'].errors
-                    && form.controls['username'].value}"
+                  [ngClass]="{input_error: form.controls['username'].errors?.['minlength']}"
                   />
               </c-input-group>
               <c-input-group class="mb-3">
                 <span cInputGroupText>@</span>
                 <input 
+                  required 
                   cFormControl
                   placeholder="Email"
                   autoComplete="email"
                   formControlName = "email"
                   (ngModelChange)="formValid()"
-                  [ngClass]="{input_error: form.controls['email'].errors
-                    && form.controls['email'].value}"/>
+                  [ngClass]="{input_error: form.controls['email'].errors?.['email']}"/>
               </c-input-group>
+              <p class="alert-error" *ngIf="form.controls['email'].errors?.['email']">
+                El formato del email es incorrecto
+              </p>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
                 <input 
+                  required 
                   cFormControl
                   type="password"
                   placeholder="Password"
                   autoComplete="new-password"
                   formControlName = "password"
                   (ngModelChange)="formValid()"
-                  [ngClass]="{input_error: form.controls['password'].errors
-                    && form.controls['password'].value}"/>
+                  [ngClass]="{input_error: form.controls['password'].errors?.['minlength']}"/>
               </c-input-group>
               <p class="alert-error" *ngIf="form.controls['password'].errors?.['minlength']">
                 La contraseña debe tener almenos 5 caracteres

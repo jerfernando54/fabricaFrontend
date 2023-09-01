@@ -26,14 +26,13 @@ export class AuthService {
   ){
     this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')!));
     this.auth = this.userSubject.asObservable();
-  }
+  };
 
    public get userValue() {
     return this.userSubject.value;
-  }
+  };
 
   login(authData:authData ): Observable<Auth>{
-
     return this._http.post<Auth>(`${this.baseUrl}auth/login`, authData).pipe(
       map(res => {
         localStorage.setItem('user', JSON.stringify(res.user))
@@ -41,13 +40,13 @@ export class AuthService {
         this.userSubject.next(res);
         return res
       })
-    )
-  }
+    );
+  };
 
   getUserRol(): string {
     this.user = JSON.parse(localStorage.getItem('user')!)
     return this.user?.role!
-  }
+  };
 
   logout(): void{
     this.userSubject.next(null);
@@ -58,5 +57,5 @@ export class AuthService {
     localStorage.removeItem('dashboardData');
 
     this.router.navigate(['login']);
-  }
+  };
 }

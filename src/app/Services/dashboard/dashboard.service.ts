@@ -18,7 +18,7 @@ export class DashboardService {
     // const headers = new HttpHeaders().set("Authorization", this._auth.userValue?.token!);
     // return this._http.get<Articulo[]>(`${this.baseUrl}/cajas/puestos`, {headers: headers})
 
-    return this._http.get<Articulo[]>(`${this.baseUrl}/cajas/puestos`).pipe(
+    return this._http.get<Articulo[]>(`${this.baseUrl}cajas/puestos`).pipe(
       map((res:Articulo[]) => {
         localStorage.setItem('dashboardData', JSON.stringify(res))
         return res

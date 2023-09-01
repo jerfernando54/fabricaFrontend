@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute  } from "@angular/router";
-import { first, Observable, of } from 'rxjs';
+import { Router } from "@angular/router";
+import { first } from 'rxjs';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Roles } from 'src/app/models/roles.model';
 
 import { authData } from 'src/app/models/user.model';
 import { AuthService }from 'src/app/Services/auth/auth.service'
@@ -20,10 +21,10 @@ export class LoginComponent implements OnInit {
   error?: string;
   loading = false;
   submitted = false;
+  roles = Roles
 
   constructor(
     private formBuilder: FormBuilder,
-    private actRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService
   ) { 
@@ -47,16 +48,13 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    const userData = {
-      username: this.f['username'].value, password: this.f['password'].value
-    }
 
-    this.authService.login(userData).pipe(first())
+    this.authService.login(this.form.value).pipe(first())
       .subscribe({next: () => {
         this.router.navigateByUrl('dasboard');
       },
       error: error => {
-        this.error = error || 'Could not establish connection to server';
+        this.error = error.message || 'Could not establish connection to server';
         this.loading = false;
       }
     })
@@ -72,8 +70,8 @@ export class LoginComponent implements OnInit {
 
   createForm(): void {
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 }

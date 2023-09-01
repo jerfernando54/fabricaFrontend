@@ -59,6 +59,7 @@ export class RegisterComponent {
   }
 
   formValid(): void{
+    console.log(this.form.controls['email'].errors)
     if (this.form.invalid) {
       this.isButtonLoginDisabled = true;
     } else {

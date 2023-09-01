@@ -21,8 +21,8 @@
             [striped]="true"
             align="middle"
             cTable
-            class="mb-0 border"
-          >
+            class="mb-0 border">
+
             <thead cTableColor="dark">
               <tr>
                 <th><h5><strong>OF</strong></h5></th>
@@ -39,7 +39,10 @@
                 <td>
                   <div class="d-flex justify-content-between">
                     <div class="float-start">
-                      <strong>{{articulo.UNID_EMBALADAS}} ({{calcularPercentaje(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}} %)</strong>
+                      <strong>
+                        {{articulo.UNID_EMBALADAS}} 
+                        <!-- ({{calcularPercentaje(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}} %) -->
+                      </strong>
                     </div>
                     <div class="float-end ms-1 text-nowrap">
                       <strong class="text-large-emphasis">
@@ -47,11 +50,13 @@
                       </strong>
                     </div>
                   </div>
-                  <c-progress>
+                  <c-progress [height]="25">
                     <c-progress-bar
+                      variant="striped"
                       [value]="calcularBadge(articulo.Cantidad!, articulo.UNID_EMBALADAS!)"
-                      color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}"
-                    ></c-progress-bar>
+                      color="{{getColor(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}">
+                      <span class="span_percentaje">{{calcularBadge(articulo.Cantidad!, articulo.UNID_EMBALADAS!)}}%</span>
+                    </c-progress-bar>
                   </c-progress>
                 </td>
   

@@ -1,3 +1,4 @@
-export interface Roles {
-  role?: string;
+export  enum Roles {
+  admin = 'Admin',
+  fabrica = 'Fabrica'
 }

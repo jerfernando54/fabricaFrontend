@@ -1,46 +1,63 @@
 
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
+
 <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
   <c-container>
     <c-row class="justify-content-center">
       <c-col md="8">
-        <c-col *ngIf="error" class="alert alert-danger">{{error}}</c-col>
+        <c-col *ngIf="error" class="alert alert-danger">
+          <svg class="bi exclamation flex-shrink-0 me-2" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill"/>
+          </svg>
+          {{error}}
+        </c-col>
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
               <form cForm [formGroup]="form" (ngSubmit)="login()">
                 <h1>Iniciar sesión</h1>
                 <p class="text-medium-emphasis">Inicia sesión en tu cuenta</p>
-                <c-input-group class="mb-3">
+                <c-input-group class="mb-3 input_username">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
                   <input
-                    autoComplete="username"
-                    formControlName = "username"
                     cFormControl
-                    placeholder="Usuario"
                     name = "username"
+                    placeholder="Usuario"
+                    formControlName = "username"
                     (ngModelChange)="changeInput()"
+                    [ngClass]="{input_error: form.controls['username'].errors
+                      && form.controls['username'].value}"
                   />
-                  <c-row *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-                    <c-row *ngIf="f['username'].errors['required']">Username is required</c-row>
-                  </c-row>
                 </c-input-group>
-                <c-input-group class="mb-4">
+                <span *ngIf="form.controls['username'].errors?.['minlength']" class="alert-error">
+                  El usuario debe tener almenos 3 caracteres
+                </span>
+
+                <c-input-group class="mb-4 input_password">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
                   <input
-                    autoComplete="current-password"
                     cFormControl
-                    formControlName = "password"
-                    placeholder="Contraseña"
-                    name = "password"
                     type="password"
+                    name = "password"
+                    placeholder="Contraseña"
+                    formControlName = "password"
                     (ngModelChange)="changeInput()"
+                    [ngClass]="{input_error: form.controls['password'].errors
+                      && form.controls['password'].value}"
                   />
                 </c-input-group>
-                <c-row>
+                <c-col *ngIf="form.controls['password'].errors?.['minlength']" class="alert-error">
+                  La contraseña debe tener almenos 5 caracteres
+                </c-col>
+                <c-row class="mt-4">
                   <c-col xs="6">
                     <button type="submit" cButton class="px-4" color="primary" [disabled]="isButtonLoginDisabled || loading" >
                       <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>

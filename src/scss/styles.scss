@@ -24,3 +24,13 @@ $enable-rtl: true;
 
 // If you want to add something do it here
 @import "custom";
+
+
+.alert-error {
+  color: red;
+  font-size: 13px;
+}
+
+.input_error {
+  border: 1px solid red !important;
+}
